@@ -11,14 +11,17 @@ class xlsExport {
   // data: array of objects with the data for each row of the table
   // name: title for the worksheet
   constructor(data, title = 'Worksheet') {
+    // input validation: new xlsExport([], String)
     if (!Array.isArray(data) || (typeof title !== 'string' || Object.prototype.toString.call(title) !== '[object String]'))
-        throw new Error("Invalid input types: new xlsExport(Array [], String)");
+      throw new Error("Invalid input types: new xlsExport(Array [], String)");
 
     this._data = data;
     this._title = title;
   }
 
   set setData(data) {
+    if (!Array.isArray(data)) throw new Error("Invalid input type: setData(Array [])");
+
     this._data = data;
   }
 
@@ -27,6 +30,9 @@ class xlsExport {
   }
 
   exportToXLS(fileName = 'export.xls') {
+    if (typeof fileName !== 'string' || Object.prototype.toString.call(fileName) !== '[object String]')
+      throw new Error("Invalid input type: exportToCSV(String)");
+
     const TEMPLATE_XLS = `
         <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
         <head><!--[if gte mso 9]><xml>
@@ -42,6 +48,9 @@ class xlsExport {
   }
 
   exportToCSV(fileName = 'export.csv') {
+    if (typeof fileName !== 'string' || Object.prototype.toString.call(fileName) !== '[object String]')
+      throw new Error("Invalid input type: exportToCSV(String)");
+
     const MIME_CSV = 'data:attachament/csv,';
     this.downloadFile(MIME_CSV + encodeURIComponent(this.objectToSemicolons()), fileName);
   }
@@ -62,8 +71,8 @@ class xlsExport {
     const colsHead = `<tr>${Object.keys(this._data[0]).map(key => `<td>${key}</td>`).join('')}</tr>`;
 
     const colsData = this._data.map(obj => [`<tr>
-                ${Object.keys(obj).map(col => `<td>${obj[col]}</td>`).join('')}
-            </tr>`])
+                ${Object.keys(obj).map(col => `<td>${obj[col] ? obj[col] : ''}</td>`).join('')}
+            </tr>`]) // 'null' values not showed
       .join('');
 
     return `
