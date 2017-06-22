@@ -35,9 +35,10 @@ class xlsExport {
 
     const TEMPLATE_XLS = `
         <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
+        <meta http-equiv="content-type" content="application/vnd.ms-excel; charset=UTF-8"/>
         <head><!--[if gte mso 9]><xml>
         <x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{title}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml>
-        <![endif]--><meta http-equiv="content-type" content="text/plain; charset=UTF-8"/></head>
+        <![endif]--></head>
         <body>{table}</body></html>`;
     const MIME_XLS = 'data:application/vnd.ms-excel;base64,';
 
