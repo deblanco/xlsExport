@@ -1,7 +1,7 @@
 /**
  * 21/06/2017
  * Daniel Blanco Parla
- * http://github.com/deblanco
+ * https://github.com/deblanco/xlsExport
  */
 
 'use strict';
