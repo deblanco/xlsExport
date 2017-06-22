@@ -7,7 +7,8 @@
 </head>
 
 <body>
-  <input type="button" value="Click here to download a sample" />
+  <input type="button" onclick="xls.exportToXLS('export.xls')" value="Click here to download a XLS sample" />
+  <input type="button" onclick="xls.exportToCSV()" value="Click here to download a CSV sample" />
   <script>
   const dataSample = [{
       "symbol": "IBM",
