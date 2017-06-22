@@ -11,6 +11,9 @@ class xlsExport {
   // data: array of objects with the data for each row of the table
   // name: title for the worksheet
   constructor(data, title = 'Worksheet') {
+    if (!Array.isArray(data) || (typeof title !== 'string' || Object.prototype.toString.call(title) !== '[object String]'))
+        throw new Error("Invalid input types: new xlsExport(Array [], String)");
+
     this._data = data;
     this._title = title;
   }
