@@ -58,6 +58,7 @@ class xlsExport {
 
   downloadFile(output, fileName) {
     const link = document.createElement('a');
+    document.body.appendChild(link);
     link.download = fileName;
     link.href = output;
     link.click();
@@ -76,11 +77,7 @@ class xlsExport {
             </tr>`]) // 'null' values not showed
       .join('');
 
-    return `
-        <table>
-            ${colsHead}
-            ${colsData}
-        </table>`.trim(); // remove spaces...
+    return `<table>${colsHead}${colsData}</table>`.trim(); // remove spaces...
   }
 
   objectToSemicolons() {
