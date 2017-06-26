@@ -2,6 +2,14 @@
 
 Javascript library for exporting object arrays to Excel XLS and CSV.
 
+## Installation
+
+Clone or dowload the Github repo or via bower:
+
+```bash
+bower install xlsexport
+```
+
 ## Usage
 
 xlsExport is defined as a class, so has to be instantiated with **data** (objects array) and an optional **title**.
