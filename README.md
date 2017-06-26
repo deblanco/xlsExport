@@ -1,4 +1,4 @@
-# xls-export
+# xlsexport
 
 Javascript library for exporting object arrays to Excel XLS and CSV.
 
