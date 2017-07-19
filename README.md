@@ -8,6 +8,10 @@ Clone or dowload the Github repo or via bower:
 
 ```bash
 bower install xlsexport
+
+or
+
+npm install xlsexport
 ```
 
 ## Usage
