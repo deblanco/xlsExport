@@ -1,6 +1,6 @@
 {
   "name": "xlsexport",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "JS library for export array of objects to Excel XLS or CSV",
   "main": "xls-export.js",
   "scripts": {
