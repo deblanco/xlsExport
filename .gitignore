@@ -1,2 +1,4 @@
 bower.json
 bower_components/
+.eslintrc.js
+node_modules/

@@ -1,32 +1,28 @@
 /**
- * __  ___     _____                       _   
- * \ \/ / |___| ____|_  ___ __   ___  _ __| |_ 
+ * __  ___     _____                       _
+ * \ \/ / |___| ____|_  ___ __   ___  _ __| |_
  *  \  /| / __|  _| \ \/ / '_ \ / _ \| '__| __|
- *  /  \| \__ \ |___ >  <| |_) | (_) | |  | |_ 
+ *  /  \| \__ \ |___ >  <| |_) | (_) | |  | |_
  * /_/\_\_|___/_____/_/\_\ .__/ \___/|_|   \__|
- *                       |_|                   
+ *                       |_|
  * 6/12/2017
  * Daniel Blanco Parla
  * https://github.com/deblanco/xlsExport
  */
 
-'use strict';
-
 class XlsExport {
-
   // data: array of objects with the data for each row of the table
   // name: title for the worksheet
   constructor(data, title = 'Worksheet') {
     // input validation: new xlsExport([], String)
-    if (!Array.isArray(data) || (typeof title !== 'string' || Object.prototype.toString.call(title) !== '[object String]'))
-      throw new Error("Invalid input types: new xlsExport(Array [], String)");
+    if (!Array.isArray(data) || (typeof title !== 'string' || Object.prototype.toString.call(title) !== '[object String]')) { throw new Error('Invalid input types: new xlsExport(Array [], String)'); }
 
     this._data = data;
     this._title = title;
   }
 
   set setData(data) {
-    if (!Array.isArray(data)) throw new Error("Invalid input type: setData(Array [])");
+    if (!Array.isArray(data)) throw new Error('Invalid input type: setData(Array [])');
 
     this._data = data;
   }
@@ -36,8 +32,7 @@ class XlsExport {
   }
 
   exportToXLS(fileName = 'export.xls') {
-    if (typeof fileName !== 'string' || Object.prototype.toString.call(fileName) !== '[object String]')
-      throw new Error("Invalid input type: exportToCSV(String)");
+    if (typeof fileName !== 'string' || Object.prototype.toString.call(fileName) !== '[object String]') { throw new Error('Invalid input type: exportToCSV(String)'); }
 
     const TEMPLATE_XLS = `
         <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
@@ -55,8 +50,7 @@ class XlsExport {
   }
 
   exportToCSV(fileName = 'export.csv') {
-    if (typeof fileName !== 'string' || Object.prototype.toString.call(fileName) !== '[object String]')
-      throw new Error("Invalid input type: exportToCSV(String)");
+    if (typeof fileName !== 'string' || Object.prototype.toString.call(fileName) !== '[object String]') { throw new Error('Invalid input type: exportToCSV(String)'); }
 
     const MIME_CSV = 'data:attachament/csv,';
     this.downloadFile(MIME_CSV + encodeURIComponent(this.objectToSemicolons()), fileName);
@@ -89,14 +83,13 @@ class XlsExport {
   objectToSemicolons() {
     const colsHead = Object.keys(this._data[0]).map(key => [key]).join(';');
     const colsData = this._data.map(obj => [ // obj === row
-                            Object.keys(obj).map(col => [
-                                obj[col] // row[column]
-                            ]).join(';') // join the row with ';'
-                        ]).join('\n'); // end of row
+      Object.keys(obj).map(col => [
+        obj[col], // row[column]
+      ]).join(';'), // join the row with ';'
+    ]).join('\n'); // end of row
 
     return `${colsHead}\n${colsData}`;
   }
-
 }
 
 export default XlsExport;

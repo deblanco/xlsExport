@@ -19,18 +19,21 @@ npm install xlsexport
 xlsExport is defined as a class, so has to be instantiated with **data** (objects array) and an optional **title**.
 
 ```javascript
-var xls = new xlsExport([..., Object], String);
+var xls = new XlsExport([..., Object], String);
 ```
+Since Chromium(v61) supports ES6 Modules XlsExport is available with 'import' syntax 😎.
 
 ### Methods:
 - *exportToXLS(String fileName)*: convert data and force download of a Excel XLS file.
 - *exportToCSV(String fileName)*: convert data separate by semi-colons and force download of a CSV file.
 
-*fileName parameter is **optional**, if its not defined the file will be named "export.xls".*
+*fileName parameter is **optional**, if it's not defined, the file will be named "export.xls".*
 
 ### Example
 ```javascript
-var xls = new xlsExport([..., Object], String);
+import XlsExport from './xls-export.js';
+
+var xls = new XlsExport([..., Object], String);
 xls.exportToXLS('export2017.xls');
 xls.exportToCSV('export2017.xls');
 ```
