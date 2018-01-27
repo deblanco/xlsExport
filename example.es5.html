@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>xls-export sample page</title>
+</head>
+
+<body>
+  <input type="button" id="xls-button" value="Click here to download a XLS sample" />
+  <input type="button" id="csv-button" value="Click here to download a CSV sample" />
+  <script type="text/javascript" src="xls-export.es5.js"></script>
+  <script type="module">
+    // import XlsExport from './xls-export.js';
+    import dataSample from './example-dataset.js';
+
+    const xls = new XlsExport(dataSample, 'Example WB');
+    document.querySelector('#xls-button').addEventListener('click', function() { xls.exportToXLS('export-example.xls') });
+    document.querySelector('#csv-button').addEventListener('click', function() { xls.exportToCSV() })
+  </script>
+</body>
+
+</html>

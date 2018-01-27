@@ -4,7 +4,8 @@
   "description": "JS library for export array of objects to Excel XLS or CSV",
   "main": "xls-export.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "babel": "babel --presets es2015 xls-export.js -o xls-export.es5.js",
+    "webpack": "webpack"
   },
   "repository": {
     "type": "git",
@@ -26,6 +27,11 @@
   },
   "homepage": "https://github.com/deblanco/xlsExport#readme",
   "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-3": "^6.24.1",
     "eslint": "^4.12.1",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.8.0"
