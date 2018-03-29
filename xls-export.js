@@ -15,7 +15,9 @@ class XlsExport {
   // name: title for the worksheet
   constructor(data, title = 'Worksheet') {
     // input validation: new xlsExport([], String)
-    if (!Array.isArray(data) || (typeof title !== 'string' || Object.prototype.toString.call(title) !== '[object String]')) { throw new Error('Invalid input types: new xlsExport(Array [], String)'); }
+    if (!Array.isArray(data) || (typeof title !== 'string' || Object.prototype.toString.call(title) !== '[object String]')) {
+      throw new Error('Invalid input types: new xlsExport(Array [], String)');
+    }
 
     this._data = data;
     this._title = title;
@@ -32,7 +34,9 @@ class XlsExport {
   }
 
   exportToXLS(fileName = 'export.xls') {
-    if (typeof fileName !== 'string' || Object.prototype.toString.call(fileName) !== '[object String]') { throw new Error('Invalid input type: exportToCSV(String)'); }
+    if (typeof fileName !== 'string' || Object.prototype.toString.call(fileName) !== '[object String]') {
+      throw new Error('Invalid input type: exportToCSV(String)');
+    }
 
     const TEMPLATE_XLS = `
         <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
@@ -43,17 +47,24 @@ class XlsExport {
         <body>{table}</body></html>`;
     const MIME_XLS = 'data:application/vnd.ms-excel;base64,';
 
-    const parameters = { title: this._title, table: this.objectToTable() };
+    const parameters = {
+      title: this._title,
+      table: this.objectToTable()
+    };
     const computeOutput = TEMPLATE_XLS.replace(/{(\w+)}/g, (x, y) => parameters[y]);
 
     this.downloadFile(MIME_XLS + this.toBase64(computeOutput), fileName);
   }
 
   exportToCSV(fileName = 'export.csv') {
-    if (typeof fileName !== 'string' || Object.prototype.toString.call(fileName) !== '[object String]') { throw new Error('Invalid input type: exportToCSV(String)'); }
-
-    const MIME_CSV = 'data:attachament/csv,';
-    this.downloadFile(MIME_CSV + encodeURIComponent(this.objectToSemicolons()), fileName);
+    if (typeof fileName !== 'string' || Object.prototype.toString.call(fileName) !== '[object String]') {
+      throw new Error('Invalid input type: exportToCSV(String)');
+    }
+    const computedCSV = new Blob([this.objectToSemicolons()], {
+        type: 'text/csv;charset=utf-8'
+      });
+    const csvLink = window.URL.createObjectURL(computedCSV);
+    this.downloadFile(csvLink, fileName);
   }
 
   downloadFile(output, fileName) {
