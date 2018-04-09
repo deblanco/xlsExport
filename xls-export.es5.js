@@ -43,7 +43,7 @@ var XlsExport = function () {
       }
 
       var TEMPLATE_XLS = '\n        <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">\n        <meta http-equiv="content-type" content="application/vnd.ms-excel; charset=UTF-8"/>\n        <head><!--[if gte mso 9]><xml>\n        <x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{title}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml>\n        <![endif]--></head>\n        <body>{table}</body></html>';
-      var MIME_XLS = 'data:application/vnd.ms-excel;base64,';
+      var MIME_XLS = 'application/vnd.ms-excel;base64,';
 
       var parameters = {
         title: this._title,
@@ -53,7 +53,11 @@ var XlsExport = function () {
         return parameters[y];
       });
 
-      this.downloadFile(MIME_XLS + this.toBase64(computeOutput), fileName);
+      var computedXLS = new Blob([computeOutput], {
+        type: MIME_XLS
+      });
+      var xlsLink = window.URL.createObjectURL(computedXLS);
+      this.downloadFile(xlsLink, fileName);
     }
   }, {
     key: 'exportToCSV',

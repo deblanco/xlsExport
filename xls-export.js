@@ -45,15 +45,19 @@ class XlsExport {
         <x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{title}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml>
         <![endif]--></head>
         <body>{table}</body></html>`;
-    const MIME_XLS = 'data:application/vnd.ms-excel;base64,';
+    const MIME_XLS = 'application/vnd.ms-excel;base64,';
 
     const parameters = {
       title: this._title,
-      table: this.objectToTable()
+      table: this.objectToTable(),
     };
     const computeOutput = TEMPLATE_XLS.replace(/{(\w+)}/g, (x, y) => parameters[y]);
 
-    this.downloadFile(MIME_XLS + this.toBase64(computeOutput), fileName);
+    const computedXLS = new Blob([computeOutput], {
+      type: MIME_XLS,
+    });
+    const xlsLink = window.URL.createObjectURL(computedXLS);
+    this.downloadFile(xlsLink, fileName);
   }
 
   exportToCSV(fileName = 'export.csv') {
@@ -61,8 +65,8 @@ class XlsExport {
       throw new Error('Invalid input type: exportToCSV(String)');
     }
     const computedCSV = new Blob([this.objectToSemicolons()], {
-        type: 'text/csv;charset=utf-8'
-      });
+      type: 'text/csv;charset=utf-8',
+    });
     const csvLink = window.URL.createObjectURL(computedCSV);
     this.downloadFile(csvLink, fileName);
   }
