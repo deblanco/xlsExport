@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>xlsexport.js</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+    <meta name="description" content="xlsexport.js is a small, zero-dependency library which allows exporting
+        JavaScript array (containing any number of objects) to Excel files (XLS and CSV).">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="http://twemoji.maxcdn.com/2/twemoji.min.js?2.5"></script>
+</head>
+
+<body>
+    <div id="wrapper">
+        <header>
+            <h1>xlsexport.js</h1>
+            <div>zero-dependency library for exporting object arrays to Excel XLS and CSV.</div>
+        </header>
+        <div id="content">
+            <div>
+                <img src="https://img.shields.io/github/release/deblanco/xlsexport.svg">
+                <img src="https://img.shields.io/npm/dt/xlsexport.svg">
+                <img src="https://img.shields.io/github/stars/deblanco/xlsexport.svg?style=social&label=Stars">
+            </div>
+            <h1>Installation 🚀</h1>
+            <div>
+                Clone or dowload the Github repo or via npm:
+                <div class="code">
+                    npm install xlsexport
+                </div>
+            </div>
+            <h1>Usage 👩‍🔧</h1>
+            <div>
+                xlsExport is defined as a class, so has to be instantiated with data (objects array) and an optional title.
+                <div class="code">
+                    var xls = new XlsExport([..., Object], String);
+                </div>
+                Since Chromium(v61) supports ES6 Modules XlsExport is available with 'import' syntax 😎. For older browser I also include
+                an ES5 version inside the package.
+            </div>
+            <h1>Methods 📖</h1>
+            <div>
+                <ul>
+                    <li>
+                        <i>exportToXLS(String fileName)</i>: convert data and force download of a Excel XLS file.</li>
+                    <li>
+                        <i>exportToCSV(String fileName)</i>: convert data separate by semi-colons and force download of a CSV
+                        file.
+                    </li>
+                </ul>
+                <i>fileName parameter is optional, if it's not defined, the file will be named "export.xls".</i>
+            </div>
+            <h1>Example 🛫</h1>
+            <div class="code">
+                import XlsExport from './xls-export.js';
+                <br>
+                <br> var xls = new XlsExport([..., Object], String);
+                <br> xls.exportToXLS('export2017.xls');
+                <br> xls.exportToCSV('export2017.xls');
+            </div>
+            <h1>Todo ✅</h1>
+            <div>
+                <ul>
+                    <li>Support for node.js</li>
+                    <li>Support for more formats: .ods, enchance .xls, ...</li>
+                </ul>
+            </div>
+            <hr>
+            <footer>
+                <span>By Daniel Blanco Parla</span>
+                <span><a href="www.linkedin.com/in/daniel-blanco-parla-5aa8a424">Linkedin</a></span>
+            </footer>
+        </div>
+    </div>
+    <script>
+        (function () {
+            const content = document.querySelector('#content');
+            twemoji.parse(content);
+        }());
+    </script>
+</body>
+
+</html>
