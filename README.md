@@ -4,7 +4,7 @@ Javascript library for exporting object arrays to Excel XLS and CSV.
 
 ## Installation
 
-Clone or dowload the Github repo or via bower:
+Clone or download the Github repo or via bower:
 
 ```bash
 bower install xlsexport
@@ -21,7 +21,7 @@ xlsExport is defined as a class, so has to be instantiated with **data** (object
 ```javascript
 var xls = new XlsExport([..., Object], String);
 ```
-Since Chromium(v61) supports ES6 Modules XlsExport is available with 'import' syntax 😎. For older browser I also include an ES5 version inside the package.
+Since Chromium(v61) supports ES6 Modules, XlsExport is available with 'import' syntax 😎. For older browsers I also include an ES5 version inside the package.
 
 ### Methods:
 - *exportToXLS(String fileName)*: convert data and force download of a Excel XLS file.
