@@ -5,15 +5,20 @@
  *  /  \| \__ \ |___ >  <| |_) | (_) | |  | |_
  * /_/\_\_|___/_____/_/\_\ .__/ \___/|_|   \__|
  *                       |_|
- * 6/12/2017
+ * 06/09/2018
  * Daniel Blanco Parla
+ * Contributor : Samkit Jain (https://samkit5495.github.io)
  * https://github.com/deblanco/xlsExport
  */
+import {unescape} from "querystring";
 
-class XlsExport {
+export class XlsExport {
   // data: array of objects with the data for each row of the table
   // name: title for the worksheet
-  constructor(data, title = 'Worksheet') {
+  private _data;
+  private _columns;
+  private _title;
+  constructor(data,columns, title = 'Worksheet') {
     // input validation: new xlsExport([], String)
     if (!Array.isArray(data) || (typeof title !== 'string' || Object.prototype.toString.call(title) !== '[object String]')) {
       throw new Error('Invalid input types: new xlsExport(Array [], String)');
@@ -21,6 +26,7 @@ class XlsExport {
 
     this._data = data;
     this._title = title;
+    this._columns= columns;
   }
 
   set setData(data) {
@@ -83,14 +89,33 @@ class XlsExport {
     return window.btoa(unescape(encodeURIComponent(string)));
   }
 
+  getValue(object, path){
+    let keys = path.split('.');
+    keys.forEach(key=>{
+      object = object[key];
+    });
+    return object;
+  }
+
   objectToTable() {
     // extract keys from the first object, will be the title for each column
-    const colsHead = `<tr>${Object.keys(this._data[0]).map(key => `<td>${key}</td>`).join('')}</tr>`;
+    let colsHead, colsData;
+    if(this._columns){
+      colsHead = `<tr>${this._columns.map(data => `<td>${data.name}</td>`).join('')}</tr>`;
 
-    const colsData = this._data.map(obj => [`<tr>
+      colsData = this._data.map(obj => [`<tr>
+                ${this._columns.map(col => `<td>${this.getValue(obj, col.prop) ? this.getValue(obj, col.prop) : ''}</td>`).join('')}
+            </tr>`]) // 'null' values not showed
+        .join('');
+
+    } else {
+      colsHead = `<tr>${Object.keys(this._data[0]).map(key => `<td>${key}</td>`).join('')}</tr>`;
+
+      colsData = this._data.map(obj => [`<tr>
                 ${Object.keys(obj).map(col => `<td>${obj[col] ? obj[col] : ''}</td>`).join('')}
             </tr>`]) // 'null' values not showed
-      .join('');
+        .join('');
+    }
 
     return `<table>${colsHead}${colsData}</table>`.trim(); // remove spaces...
   }
