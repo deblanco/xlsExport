@@ -33,18 +33,27 @@ class XlsExport {
     return this._data;
   }
 
-  exportToXLS(fileName = 'export.xls') {
+  exportToXLS(fileName = 'export.xls', rtl = false) {
     if (typeof fileName !== 'string' || Object.prototype.toString.call(fileName) !== '[object String]') {
       throw new Error('Invalid input type: exportToCSV(String)');
     }
 
-    const TEMPLATE_XLS = `
-        <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
-        <meta http-equiv="content-type" content="application/vnd.ms-excel; charset=UTF-8"/>
-        <head><!--[if gte mso 9]><xml>
-        <x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{title}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml>
-        <![endif]--></head>
-        <body>{table}</body></html>`;
+    var TEMPLATE_XLS_val = `
+    <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
+    <meta http-equiv="content-type" content="application/vnd.ms-excel; charset=UTF-8"/>
+    <head><!--[if gte mso 9]><xml>
+    <x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{title}</x:Name><x:WorksheetOptions>`;
+
+    if (rtl)
+        TEMPLATE_XLS_val = TEMPLATE_XLS_val + `<x:DisplayRightToLeft/>`;
+
+    TEMPLATE_XLS_val = TEMPLATE_XLS_val +
+    `<x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml>
+    <![endif]--></head>
+    <body>{table}</body></html>`;
+
+    const TEMPLATE_XLS = TEMPLATE_XLS_val;
+    
     const MIME_XLS = 'application/vnd.ms-excel;base64,';
 
     const parameters = {
@@ -88,8 +97,8 @@ class XlsExport {
     const colsHead = `<tr>${Object.keys(this._data[0]).map(key => `<td>${key}</td>`).join('')}</tr>`;
 
     const colsData = this._data.map(obj => [`<tr>
-                ${Object.keys(obj).map(col => `<td>${obj[col] ? obj[col] : ''}</td>`).join('')}
-            </tr>`]) // 'null' values not showed
+                ${Object.keys(obj).map(col => `<td>${(obj[col] === 0 || obj[col]) ? obj[col] : ''}</td>`).join('')}
+            </tr>`]) // 'null' values not showed but zero value is showed
       .join('');
 
     return `<table>${colsHead}${colsData}</table>`.trim(); // remove spaces...
